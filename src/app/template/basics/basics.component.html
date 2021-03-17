@@ -1,0 +1,96 @@
+
+<!-- Importantisimo: Nunca olvidar de usar el 'name' junto con el 'ngModel', ya que sirve par darle nombre y valor a los controls
+ y poder acceder a ellos a traves de la referecia de tu form, ejem: myForm.controls.product.value-->
+
+
+<h2>Basic Template</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+        <form (ngSubmit)="save()" #myForm="ngForm" autocomplete="off">
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Product</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text"
+                           name="product"
+                           class="form-control"
+                           placeholder="Product Name"
+                           ngModel
+                           required
+                           minlength="3">
+                    <span class="form-text text-danger"
+                          *ngIf="validateProduct()">
+                          Must contain at least 3 characters
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Price</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="number"
+                           name="price"
+                           class="form-control"
+                           placeholder="Price"
+                           [ngModel]="initValuesForm.price"
+                           required
+                           min="0">
+                    <span class="form-text text-danger"
+                          *ngIf="validatePrice()">
+                        Must be greater than 0
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Stock</label>
+                </div>
+                <!-- la validacion de este input se hizo con un custom directive, lo mismo se deberia hacer con el price de arriba -->
+                <div class="col-md-9">
+                    <input type="number"
+                           name="stock"
+                           class="form-control"
+                           placeholder="Stock"
+                           [ngModel]="initValuesForm.stock"
+                           required
+                           appMinPrice
+                           [minimo]="0">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary float-end" [disabled]="myForm.invalid">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <span>Valid?:</span>
+        <pre>{{myForm.valid}}</pre>
+
+        <span>Pristine:</span>
+        <pre>{{myForm.pristine}}</pre>
+
+        <span>Touched:</span>
+        <pre>{{myForm.touched}}</pre>
+
+        <span>Value:</span>
+        <pre>{{myForm.value | json}}</pre>
+
+        <span>Directive minPrice errors:</span>
+        <pre>{{myForm.controls.stock?.errors | json}}</pre>
+    </div>
+</div>

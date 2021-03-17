@@ -1,0 +1,92 @@
+<h2>Dynamic Template</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+
+        <form (submit)="save()" autocomplete="off" #myForm="ngForm">
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Name</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text"
+                           class="form-control"
+                           name="name"
+                           placeholder="Name"
+                           [ngModel]="newPerson.name"
+                           required>
+                    <span class="form-text text-danger"
+                          *ngIf="myForm.controls.name?.invalid && myForm.controls.name?.touched">
+                        Field required
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label col-form-label">Game</label>
+                </div>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input type="text"
+                               class="form-control"
+                               name="game"
+                               placeholder="Game"
+                               [(ngModel)]="inputGame"
+                               (keyup.enter)="addGame()">
+                        <button type="button"
+                                class="btn btn-outline-primary"
+                                (click)="addGame()">
+                                Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Lista de Juegos -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">List Games</label>
+                </div>
+                <div class="col-md-9">
+                    <div class="input-group mb-1" *ngFor="let game of newPerson.games; let i=index">
+                        <input class="form-control"
+                               [(ngModel)]="game.title"
+                               name="game{{i}}"
+                               required>
+
+                        <button class="btn btn-outline-danger"
+                                type="button"
+                                (click)="deleteGame(i)">
+                                Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Button -->
+            <div class="row">
+                <div class="col">
+                    <button type="button"
+                            class="btn btn-primary float-end"
+                            (click)="save()"
+                            [disabled]="myForm.invalid">
+                            Save
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<div>
+    <span>Person</span>
+    <pre>{{newPerson | json}}</pre>
+</div>
