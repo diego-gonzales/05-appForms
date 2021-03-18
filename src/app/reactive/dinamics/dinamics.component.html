@@ -1,1 +1,122 @@
-<p>dinamics works!</p>
+<h2>Reactives Dynamic</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+
+        <form autocomplete="off" (ngSubmit)="save()" [formGroup]="myFormcito">
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Name</label>
+                </div>
+                <div class="col-md-9">
+                    <input class="form-control"
+                           placeholder="Name"
+                           formControlName="name_user">
+
+                    <span class="form-text text-danger"
+                          *ngIf="fieldIsNotValid('name_user')">
+                        Field required
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Game</label>
+                </div>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input class="form-control"
+                               placeholder="Game"
+                               [formControl]="newControlGame"
+                               (keyup.enter)="addGame()">
+
+                        <button class="btn btn-outline-primary"
+                                type="button"
+                                (click)="addGame()">
+                                Add
+                        </button>
+                    </div>
+
+                    <span class="form-text text-danger"
+                          *ngIf="fieldGameInvalid()">
+                        Must have at least 3 letters
+                    </span>
+                </div>
+            </div>
+
+
+            <!-- Lista de Juegos -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">List Games</label>
+                </div>
+
+                <!-- No olvidarse del FormArrayName en el elemento html que contendra a controles del FormArray -->
+                <div class="col-md-9" formArrayName="list_games">
+                    <div class="input-group mb-1"
+                         *ngFor="let game of gamesArr.controls; let i = index">
+                        <!-- El valor de 'game' no lo utilizo, en este caso el ngFor solo sirvió para obetner el valor del index
+                        y usarlo como posicion que tiene que tomar el formControlName del FormArray -->
+                        <input class="form-control"
+                               [formControlName]="i">
+
+                        <button class="btn btn-outline-danger"
+                                type="button"
+                                (click)="deleteGame(i)">
+                                Delete
+                        </button>
+                    </div>
+
+                    <span class="form-text text-danger"
+                          *ngIf="fieldListGamesInvalid()">
+                        You must add at least one game
+                    </span>
+
+                </div>
+            </div>
+
+
+            <!-- Button -->
+            <div class="row">
+                <div class="col">
+                    <!-- Importante, si a este boton le pongo de tipo submit en este caso, entonces al agregar un juego
+                        o escribir el nombre y luego dar enter se disparará el submit, por ese lo deje con tipo 'button'-->
+                    <button type="button"
+                            class="btn btn-primary float-end"
+                            (click)="save()">
+                            Save
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <span>Valid?</span>
+    <pre>{{myFormcito.valid}}</pre>
+</div>
+<div>
+    <span>Form Value</span>
+    <pre>{{myFormcito.value | json}}</pre>
+</div>
+<br>
+
+<div>
+    <span>Valid new control AddGame?</span>
+    <pre>{{newControlGame.valid}}</pre>
+</div>
+<div>
+    <span>New Control AddGame value</span>
+    <pre>{{newControlGame.value | json}}</pre>
+</div>
+<div>
+    <span>List Game errors</span>
+    <pre>{{myFormcito.controls.list_games.errors | json}}</pre>
+</div>
