@@ -23,3 +23,17 @@
         {{ menuItem.text }}
     </li>
 </ul>
+
+<br>
+
+<h2>Auth</h2>
+<hr>
+
+<ul class="list-group">
+    <li *ngFor="let menuItem of authMenu"
+        class="list-group-item"
+        [routerLink]="menuItem.path"
+        routerLinkActive="active">
+        {{ menuItem.text }}
+    </li>
+</ul>

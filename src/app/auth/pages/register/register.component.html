@@ -1,0 +1,180 @@
+<h2>Async and Custom Validators on Reactive Forms</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+
+        <form autocomplete="off" [formGroup]="myFormcito">
+            
+            <!-- Name -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Name
+                    </label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Customer Name"
+                           formControlName="customer_name">
+
+                    <span class="form-text text-danger"
+                          *ngIf="fieldNameInvalidByRequired()">
+                        Field Required
+                    </span>
+                    <span class="form-text text-danger"
+                          *ngIf="fieldNameInvalidByPattern()">
+                        Must be in format of first and last name
+                    </span>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Email
+                    </label>
+                </div>
+                <div class="col-md-9">
+                    <input type="email"
+                           class="form-control"
+                           placeholder="Customer Email"
+                           formControlName="customer_email">
+                    
+                    <span class="form-text text-danger"
+                          *ngIf="fieldIsNotValid('customer_email')">
+                        {{emailErrorMesagge}}
+                    </span>
+
+                    <!-- <span class="form-text text-danger"
+                          *ngIf="fieldEmailRequiredOrPattern()">
+                        Enter a valid email
+                    </span>
+
+                    <span class="form-text text-danger"
+                          *ngIf="fieldEmailExists()">
+                        Email already exists
+                    </span> -->
+                </div>
+            </div>
+
+            <!-- Username -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Username
+                    </label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Username"
+                           formControlName="username">
+                    <span class="form-text text-danger"
+                          *ngIf="fieldIsNotValid('username')">
+                        Must be a valid username
+                    </span>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Password
+                    </label>
+                </div>
+                <div class="col-md-9">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Password"
+                           formControlName="password1">
+                    <span class="form-text text-danger"
+                          *ngIf="fieldIsNotValid('password1')">
+                        Must be at least 6 characters
+                     </span>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Confirm Password
+                    </label>
+                </div>
+                <div class="col-md-9">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Confirm Password"
+                           formControlName="password2">
+                    <span class="form-text text-danger"
+                          *ngIf="fieldIsNotValid('password2')">
+                        Passwords must be the same
+                    </span>
+                </div>
+            </div>
+
+            <div class="row my-4 text-center">
+                <div class="col">
+                    <button type="button"
+                            class="btn btn-primary"
+                            (click)="submitForm()"
+                            [disabled]="myFormcito.pending">
+                        Create Account
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+<div>
+    <h5>Form is Valid?</h5>
+    <pre>{{myFormcito.valid}}</pre>
+</div>
+
+<div>
+    <h5>Form Status</h5>
+    <pre>{{myFormcito.status}}</pre>
+</div>
+
+<div>
+    <h5>Form Pending?</h5>
+    <pre>{{myFormcito.pending}}</pre>
+</div>
+
+<div>
+    <h5>Erros on Customer Name Control</h5>
+    <pre>{{myFormcito.controls.customer_name.errors | json}}</pre>
+</div>
+
+<div>
+    <h5>Erros on Customer Email Control</h5>
+    <pre>{{myFormcito.controls.customer_email.errors | json}}</pre>
+</div>
+
+<div>
+    <h5>Erros on Username Control</h5>
+    <pre>{{myFormcito.controls.username.errors | json}}</pre>
+</div>
+
+<div>
+    <h5>Erros on Password</h5>
+    <pre>{{myFormcito.controls.password1.errors | json}}</pre>
+</div>
+<div>
+    <h5>Erros on Confirm Password</h5>
+    <pre>{{myFormcito.controls.password2.errors | json}}</pre>
+</div>
+
+<div>
+    <h5>Form passwords are same?</h5>
+    <pre>{{myFormcito.errors | json}}</pre>
+</div>
